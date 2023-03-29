@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Vignette1</string>
+    <string name="button">Get Image</string>
+    <string name="button2">Save Image</string>
+    <string name="button3">Vignette</string>
+    <string name="description">a picture</string>
+    <string name="seekBar_text">明るさ:%1$s</string>
+    <string name="text_view4">画像をタップしてビネットの中心点を変更</string>
+</resources>
