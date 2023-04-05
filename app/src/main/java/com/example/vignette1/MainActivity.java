@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +44,12 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private TextView textView;
     private TextView textView2;
     private TextView textView3;
-    SeekBar seekBar;
-    SeekBar seekBar2;
+    private SeekBar seekBar;
+    private SeekBar seekBar2;
     private int i = 0; //明るさの度合い
     private double j = 1.1;// 二次関数の切片
     private ImageView imageView;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
+        progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.text_view);
         Button button = findViewById(R.id.button);
         Button saveButton = findViewById(R.id.button2);
@@ -219,6 +222,13 @@ public class MainActivity extends AppCompatActivity {
     private void vignette(){
         //画像があればビネットする
         if(imageView.getDrawable() != null) {
+            //時間がかかる処理なのでビジーマークを表示する
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.bringToFront();
+            progressBar.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+            ViewGroup layout = findViewById(android.R.id.content);
+            layout.addView(progressBar);
+
             // 中心点からの最も遠い距離を計算する
             // まず、タップした位置が、画像を4分割した場合のどの範囲にあるか調べる
             int flag = 0;
@@ -295,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             imageView.setImageBitmap(bmp2);
+            //処理が終わればビジーマークを非表示にする
+            progressBar.setVisibility(View.INVISIBLE);
         }else {
             Toast.makeText(this, "画像が選択されていません", Toast.LENGTH_SHORT).show();
         }
